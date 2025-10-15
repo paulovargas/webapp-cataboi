@@ -1,0 +1,39 @@
+<div class="form">
+  <form method="post" role="form" class="loginForm">
+
+    <div class="form-group">
+      <input type="email" class="form-control" name="email" id="email" placeholder="Seu Email" data-rule="email"
+        data-msg="Por favor digite seu email!" />
+      <div class="validation"></div>
+    </div>
+
+    <div class="form-group">
+      <div class="form-control" style="border-radius: 5px; border: transparent;">
+        <input type="{{senhaVisivel ? 'text' : 'password'}}" class="" style="border-color: transparent;" name="senha"
+          id="senha" placeholder="Sua Senha  " data-rule="required" data-msg="Por favor digite sua senha!" />
+        <button (click)="mostraSenha()">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+
+        </button>
+      </div>
+      <div class="validation"></div>
+    </div>
+    <!-- <script>
+                  function mostraSenha(){
+                    var senha=document.getElementById("senha");
+                    if(senha.type=="password"){
+                      senha.type="text";
+                    }else{
+                      senha.type="password";
+                    }
+                  }
+                </script> -->
+
+
+    <button (click)="login()" class="btn-get-started"><a>Entrar</a></button>
+
+    <br>
+
+  </form>
+
+</div>

@@ -1,48 +1,8 @@
 <section id="hero">
 
-    <div class="hero-home">
-      <h1>Bem vindo ao CataBoi</h1>
-      <h2>Administre seu rebanho de onde estiver, podendo gerenciar seus dados de forma pratica e segura</h2>
-	  <div class="form">
-	  <form method="post" role="form" class="loginForm">
-
-                <div class="form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Seu Email" data-rule="email" data-msg="Por favor digite seu email!" />
-                  <div class="validation"></div>
-                </div>
-
-				<div class="form-group">
-          <div class="form-control" style="border-radius: 5px; border: transparent;">
-                  <input
-                    type="password"
-                    class=""
-                    style="border-color: transparent;"
-                    name="senha" id="senha"
-                    placeholder="Sua Senha  "
-                    data-rule="required"
-                    data-msg="Por favor digite sua senha!" />
-                    <i class="fa fa-eye" aria-hidden="true" onclick="mostraSenha()"></i>
-          </div>
-                  <div class="validation"></div>
-                </div>
-                <script>
-                  function mostraSenha(){
-                    var senha=document.getElementById("senha");
-                    if(senha.type=="password"){
-                      senha.type="text";
-                    }else{
-                      senha.type="password";
-                    }
-                  }
-                </script>
-
-
-				<button type="submit"  class="btn-get-started" ><a>Entrar</a></button>
-
-				<br>
-
-    </form>
-
-	 </div>
-    </div>
-  </section>
+  <div class="hero-home">
+    <h1>Bem vindo ao CataBoi</h1>
+    <h2>Administre seu rebanho de onde estiver, podendo gerenciar seus dados de forma pratica e segura</h2>
+    <app-login />
+  </div>
+</section>
