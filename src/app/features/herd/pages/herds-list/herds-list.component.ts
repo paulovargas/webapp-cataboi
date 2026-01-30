@@ -13,11 +13,12 @@ import { HerdService } from '../../services/herd.service';
 export class HerdsListComponent implements OnInit {
   herds: Herd[] = [];
 
-  constructor(private herdService: HerdService) {}
+  constructor(private readonly herdService: HerdService) {}
 
   ngOnInit(): void {
-    this.herdService.getHerds().subscribe(data => {
-      this.herds = data;
-    });
-  }
+  this.herdService.getHerds().subscribe({
+    next: page => this.herds = page.content,
+    error: err => console.error(err)
+  });
+}
 }

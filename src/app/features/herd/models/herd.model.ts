@@ -1,5 +1,7 @@
 export interface Herd {
   id: number;
-  name: string;
-  description: string;
+  nomeRebanho: string;
+  descriRebanho: string;
+  nomeCliente: string;
+  quantidadeAnimais: number;
 }

@@ -9,8 +9,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let property of properties">
-        <td>{{ property.name }}</td>
-        <td>{{ property.location }}</td>
+        <td>{{ property.nomePropriedade }}</td>
+        <td>{{ property.localidade }}</td>
       </tr>
     </tbody>
     <tfoot *ngIf="properties.length === 0">

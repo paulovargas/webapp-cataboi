@@ -5,12 +5,14 @@
       <tr>
         <th>Nome</th>
         <th>Descrição</th>
+        <th>Quantidade de Animais</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let herd of herds">
-        <td>{{ herd.name }}</td>
-        <td>{{ herd.description }}</td>
+        <td>{{ herd.nomeRebanho }}</td>
+        <td>{{ herd.descriRebanho }}</td>
+        <td>{{ herd.quantidadeAnimais }}</td>
       </tr>
     </tbody>
     <tfoot *ngIf="herds.length === 0">

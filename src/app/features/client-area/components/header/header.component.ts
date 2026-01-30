@@ -27,15 +27,7 @@ export class HeaderComponent {
 
     if (config) {
       // Se a rota for encontrada no mapa e tiver as propriedades de modal
-      this.modalService.open(
-        config.component, // Componente extraído da rota
-        '',
-        config.style,     // Estilo extraído da rota (via 'data')
-        config.title,     // Título extraído da rota (via 'data')
-        '',
-        '',
-        ''
-      );
+      //this.modalService.open();
     } else {
       // Comportamento default se a rota não for encontrada ou não tiver a metadata de modal
       //this.modalService.openModal(rota, '', '');

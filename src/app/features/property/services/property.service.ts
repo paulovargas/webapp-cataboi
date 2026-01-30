@@ -6,10 +6,7 @@ import { Property } from '../models/property.model';
   providedIn: 'root'
 })
 export class PropertyService {
-  private properties: Property[] = [
-    { id: 1, name: 'Fazenda São João', location: 'Goiás' },
-    { id: 2, name: 'Fazenda Santa Maria', location: 'Minas Gerais' }
-  ];
+  private readonly properties: Property[] = [];
 
   getProperties(): Observable<Property[]> {
     return of(this.properties);

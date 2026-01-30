@@ -18,10 +18,10 @@ export class AnimalsFormComponent implements OnInit {
   isEditMode = false;
 
   constructor(
-    private fb: FormBuilder,
-    private animalService: AnimalService,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly fb: FormBuilder,
+    private readonly animalService: AnimalService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {
     this.animalForm = this.fb.group({
       name: ['', Validators.required],
@@ -33,7 +33,7 @@ export class AnimalsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    /* const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode = true;
       this.animalService.getAnimalById(id).subscribe(animal => {
@@ -42,10 +42,10 @@ export class AnimalsFormComponent implements OnInit {
           this.animalForm.patchValue(this.animal);
         }
       });
-    }
+    } */
   }
 
-  onSubmit(): void {
+  onSubmit(): void {/*
     if (this.animalForm.valid) {
       const formData = this.animalForm.value;
       if (this.isEditMode && this.animal) {
@@ -58,5 +58,5 @@ export class AnimalsFormComponent implements OnInit {
         });
       }
     }
-  }
+   */}
 }
