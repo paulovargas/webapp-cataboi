@@ -1,0 +1,20 @@
+<div class="modal-dialog align-items-center" [ngStyle]="{ 'min-width': modalStyle ? modalStyle : '170vh'}">
+  <div class="modal-content">
+    <div class="titulo mx-2 my-2">
+      <h5>{{ data?.title ? data?.title : titulo }}</h5>
+      <!-- <button mat-button (click)="close()">Fechar</button> -->
+    </div>
+    <div class="modal-body">
+      @if (data?.component) {
+        <ng-container #dynamicContainer></ng-container>
+      } @else {
+        <div>
+          <router-outlet />
+        </div>
+      }
+      <!-- @if (!data?.component && !rotaValida) {
+        <p>Nenhum conteúdo disponível.</p>
+      } -->
+    </div>
+  </div>
+</div>

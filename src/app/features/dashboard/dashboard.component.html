@@ -1,0 +1,36 @@
+<div class="dashboard-container">
+  <main class="main-content">
+    <header class="dashboard-header">
+      <h1>Dashboard</h1>
+      <button class="add-widget-btn">Adicionar Widget</button>
+    </header>
+
+    <section class="kpi-section">
+      <a routerLink="/animais">
+      <app-card-information icon="fa fa-paw" title="Total de Animais" value="1,234"></app-card-information>
+      </a>
+      <a routerLink="/rebanhos">
+        <app-card-information icon="fa fa-users" title="Rebanhos" value="12"></app-card-information>
+      </a>
+      <a routerLink="/propriedades">
+        <app-card-information icon="fa fa-map-marker" title="Propriedades" value="4"></app-card-information>
+      </a>
+      <a routerLink="/eventos">
+        <app-card-information icon="fa fa-calendar-check-o" title="Manejos Agendados" value="8"></app-card-information>
+      </a>
+    </section>
+
+    <section class="charts-section">
+      <div class="chart-wrapper">
+        <app-pie-chart></app-pie-chart>
+      </div>
+      <div class="chart-wrapper">
+        <app-line-chart></app-line-chart>
+      </div>
+    </section>
+  </main>
+
+  <aside class="sidebar">
+    <!-- A agenda de próximos manejos entrará aqui -->
+  </aside>
+</div>

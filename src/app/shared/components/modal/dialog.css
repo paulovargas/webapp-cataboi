@@ -1,0 +1,21 @@
+.modal-dialog {
+  width: 100%; /* Largura máxima do modal */
+}
+
+.modal-content {
+  max-height: 85vh; /* Altura máxima do modal (60% da viewport) */
+  align-content: center;
+}
+
+.modal-body {
+  overflow-x: hidden;
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+}
+
+.overflow-y-form {
+  max-height: 30vh;
+}

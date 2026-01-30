@@ -1,0 +1,65 @@
+:host {
+  display: block;
+  background-color: #f4f7f6; /* Um cinza claro, cor de fundo neutra */
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Mobile-first: uma coluna por padrão */
+  gap: 24px;
+  padding: 24px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-height: 200px; /* Placeholder height */
+}
+
+.kpi-section,
+.charts-section {
+  display: grid;
+  gap: 24px;
+}
+
+.kpi-section {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.kpi-section a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.charts-section {
+  grid-template-columns: 1fr; /* Uma coluna em telas menores */
+}
+
+.chart-wrapper {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-height: 300px; /* Placeholder height */
+}
+
+/* Estilos para Tablet e Desktop */
+@media (min-width: 768px) {
+  .charts-section {
+    grid-template-columns: 2fr 1fr; /* Gráfico de linha maior que o de pizza */
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-container {
+    grid-template-columns: 3fr 1fr; /* Layout principal com sidebar */
+  }
+}

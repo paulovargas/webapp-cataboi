@@ -1,0 +1,9 @@
+<div class="upcoming-events">
+  <h5>Próximos Manejos</h5>
+  <ul>
+    <li *ngFor="let event of events">
+      <span class="event-date">{{ event.date | date: 'dd/MM' }}</span>
+      <span class="event-name">{{ event.name }}</span>
+    </li>
+  </ul>
+</div>
