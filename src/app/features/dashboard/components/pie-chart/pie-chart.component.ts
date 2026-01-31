@@ -5,6 +5,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartData, ChartType, ChartConfiguration } from 'chart.js';
 import { HerdService } from '../../../herd/services/herd.service';
 import { Herd } from '../../../herd/models/herd.model';
+import { StorageService } from '../../../../core/services/storage.service';
 
 @Component({
   selector: 'app-pie-chart',
@@ -33,7 +34,7 @@ export class PieChartComponent implements OnInit {
 
   herds: Herd[] = [];
 
-  constructor(private readonly herdService: HerdService) {}
+  constructor(private readonly herdService: HerdService, private readonly storage: StorageService) {}
 
   ngOnInit(): void {
     this.herdService.getHerds().subscribe({
@@ -45,6 +46,17 @@ export class PieChartComponent implements OnInit {
         this.quantidadeAnimais = this.herds.map(
           (herd) => herd.quantidadeAnimais,
         );
+
+        console.log("quantidadeAnimais : ", this.quantidadeAnimais);
+
+        this.storage.setTotalAnimais(this.quantidadeAnimais.reduce((a, b) => a + b, 0));
+
+        console.log("totalAnimais : ", this.storage.getTotalAnimais());
+
+        this.storage.setTotalRebanhos(this.herds.length);
+
+        console.log("totalRebanhos : ", this.storage.getTotalRebanhos());
+
 
         this.pieChartData = {
           labels: this.pieChartLabels,

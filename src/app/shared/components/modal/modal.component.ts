@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ComponentRef, effect, ElementRef, Inject, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
-import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'modal',
@@ -39,8 +38,7 @@ export class ModalContentDialog implements OnInit, AfterViewInit, OnDestroy {
     private dialogRef: MatDialogRef<ModalContentDialog>,
     private elRef: ElementRef,
     private route: ActivatedRoute,
-    private router: Router,
-    private storage: StorageService
+    private router: Router
   ) {
 
     effect(() => {
