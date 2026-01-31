@@ -13,11 +13,14 @@ import { PropertyService } from '../../services/property.service';
 export class PropertiesListComponent implements OnInit {
   properties: Property[] = [];
 
-  constructor(private propertyService: PropertyService) {}
+  constructor(private readonly propertiesService: PropertyService) {}
 
   ngOnInit(): void {
-    this.propertyService.getProperties().subscribe(data => {
-      this.properties = data;
+    this.propertiesService.getProperties().subscribe({
+      next: (page) => {
+        this.properties = page.content;
+      },
+      error: (err) => console.error(err),
     });
   }
 }

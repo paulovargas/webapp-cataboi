@@ -13,7 +13,7 @@
         <app-card-information icon="fa fa-users" title="Rebanhos" value="{{totalRebanhos}}"></app-card-information>
       </a>
       <a routerLink="/propriedades">
-        <app-card-information icon="fa fa-map-marker" title="Propriedades" value="4"></app-card-information>
+        <app-card-information icon="fa fa-map-marker" title="Propriedades" value="{{totalPropriedades}}"></app-card-information>
       </a>
       <a routerLink="/eventos">
         <app-card-information icon="fa fa-calendar-check-o" title="Manejos Agendados" value="8"></app-card-information>
@@ -23,6 +23,9 @@
     <section class="charts-section">
       <div class="chart-wrapper">
         <app-pie-chart></app-pie-chart>
+      </div>
+      <div class="chart-wrapper">
+        <app-pie-chart-properties></app-pie-chart-properties>
       </div>
       <div class="chart-wrapper">
         <app-line-chart></app-line-chart>

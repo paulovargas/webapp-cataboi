@@ -7,6 +7,7 @@ export class StorageService {
 
   totalAnimais = signal<number>(0);
   totalRebanhos = signal<number>(0);
+  totalPropriedades = signal<number>(0);
 
   setTotalAnimais(total: number) {
     this.totalAnimais.set(total);
@@ -22,5 +23,13 @@ export class StorageService {
 
   getTotalRebanhos() {
     return this.totalRebanhos();
+  }
+
+  setTotalPropriedades(total: number) {
+    this.totalPropriedades.set(total);
+  }
+
+  getTotalPropriedades() {
+    return this.totalPropriedades();
   }
 }
