@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ComponentRef, effect, ElementRef, Inject, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, effect, ElementRef, Inject, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
@@ -20,7 +20,7 @@ export class ModalComponent {}
     RouterOutlet
   ]
 })
-export class ModalContentDialog implements OnInit, AfterViewInit, OnDestroy {
+export class ModalContentDialog implements OnInit, AfterViewInit {
 
   modalStyle: string = '160vh';
   myString!: string;
@@ -35,10 +35,10 @@ export class ModalContentDialog implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { component?: any, object?: any, modalStyle: string, title?: string, codUF: string, id: string},
-    private dialogRef: MatDialogRef<ModalContentDialog>,
-    private elRef: ElementRef,
-    private route: ActivatedRoute,
-    private router: Router
+    private readonly dialogRef: MatDialogRef<ModalContentDialog>,
+    private readonly elRef: ElementRef,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {
 
     effect(() => {
@@ -47,7 +47,9 @@ export class ModalContentDialog implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("this.modalStyle : ", this.modalStyle)
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -59,7 +61,7 @@ export class ModalContentDialog implements OnInit, AfterViewInit, OnDestroy {
 
         this.container.clear();
         this.componentRef = this.container.createComponent(this.data.component);
-        if (this.componentRef && this.componentRef.instance) {
+        if (this.componentRef?.instance) {
           if (this.data.object && this.componentRef.instance) {
             this.componentRef.instance.dados = this.data.object;
           }
@@ -71,8 +73,5 @@ export class ModalContentDialog implements OnInit, AfterViewInit, OnDestroy {
 
     });
   }
-
-  ngOnDestroy(): void { }
-
 }
 
