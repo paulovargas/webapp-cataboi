@@ -1,27 +1,38 @@
 <div class="form">
-  <form method="post" role="form" class="loginForm">
-
+  <form (submit)="login($event)" role="form" class="loginForm">
     <div class="form-group">
-      <input type="email" class="form-control" name="email" id="email" placeholder="Seu Email" data-rule="email"
-        data-msg="Por favor digite seu email!" />
-      <div class="validation"></div>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        id="email"
+        [(ngModel)]="email"
+        placeholder="Seu Email"
+        required
+      />
     </div>
 
     <div class="form-group">
-      <div class="form-control" style="border-radius: 5px; border: transparent;">
-        <input type="{{senhaVisivel ? 'text' : 'password'}}" class="" style="border-color: transparent;" name="senha"
-          id="senha" placeholder="Sua Senha  " data-rule="required" data-msg="Por favor digite sua senha!" />
-        <button (click)="mostraSenha()">
+      <div class="form-control" style="border-radius: 5px; border: transparent; display: flex; align-items: center;">
+        <input
+          [type]="senhaVisivel ? 'text' : 'password'"
+          style="border-color: transparent; width: 100%;"
+          name="senha"
+          id="senha"
+          [(ngModel)]="senha"
+          placeholder="Sua Senha"
+          required
+        />
+        <button type="button" (click)="mostraSenha()" style="border: 0; background: transparent;">
           <i class="fa fa-eye" aria-hidden="true"></i>
-
         </button>
       </div>
-      <div class="validation"></div>
     </div>
-    <button (click)="login()" class="btn-get-started"><a>Entrar</a></button>
 
-    <br>
+    <div *ngIf="erroLogin" class="text-danger mb-2">{{ erroLogin }}</div>
 
+    <button type="submit" [disabled]="enviando" class="btn-get-started">
+      {{ enviando ? 'Entrando...' : 'Entrar' }}
+    </button>
   </form>
-
 </div>

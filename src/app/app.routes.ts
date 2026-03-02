@@ -14,6 +14,7 @@ import { HerdsFormComponent } from './features/herd/pages/herds-form/herds-form.
 import { UsersListComponent } from './features/user/pages/users-list/users-list.component';
 import { UsersFormComponent } from './features/user/pages/users-form/users-form.component';
 import { ReportsAnimalsComponent } from './features/report/pages/reports-animals/reports-animals.component';
+import { authGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
   // Redireciona para dashboard ou home conforme a lógica de auth (simplificado aqui)
@@ -22,6 +23,7 @@ export const routes: Routes = [
   {
     path: '',
     component: ClientAreaComponent,
+    canActivate: [authGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'animais', component: AnimalsListComponent },
@@ -39,13 +41,15 @@ export const routes: Routes = [
       // Rebanhos
       { path: 'rebanhos', component: HerdsListComponent },
       { path: 'rebanhos/novo', component: HerdsFormComponent },
+      { path: 'rebanhos/editar/:id', component: HerdsFormComponent },
 
       // Usuários
       { path: 'usuarios', component: UsersListComponent },
       { path: 'usuarios/novo', component: UsersFormComponent },
 
       // Relatórios
-      { path: 'relatorios/animais', component: ReportsAnimalsComponent },
+      { path: 'relatorios', component: ReportsAnimalsComponent },
+      { path: 'relatorios/animais', redirectTo: 'relatorios', pathMatch: 'full' },
 
       {
         path: 'my-profile',

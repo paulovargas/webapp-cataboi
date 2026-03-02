@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ModalService } from '../../../../shared/services/modal.service';
 import { RouteModalMapperService } from '../../../../shared/services/route-modal-mapper.service';
+import { AuthService } from '../../../../core/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +18,14 @@ export class HeaderComponent {
    */
   constructor(
     private modalService: ModalService,
-    private routeMapper: RouteModalMapperService
+    private routeMapper: RouteModalMapperService,
+    private authService: AuthService,
+    private router: Router
   ) {}
+
+  get userDisplayName(): string {
+    return this.authService.getCurrentUser()?.nome || 'Usuario';
+  }
 
   openModal(route: string){
     const config = this.routeMapper.getModalConfig(route);
@@ -33,6 +41,11 @@ export class HeaderComponent {
       //this.modalService.openModal(rota, '', '');
       alert("Rota Não encontrada !");
     }
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 
 

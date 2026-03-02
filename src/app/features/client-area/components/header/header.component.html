@@ -4,16 +4,25 @@
       <a><img style="width: 5vw;" src="img/logo-dash-white.png" alt="Logo Cataboi" title="Cataboi" /></a>
     </div>
     <a class="navbar-brand ms-2" routerLink="/dashboard">Cataboi</a>
-    <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler me-2"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse ms-2" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/my-profile">Usuário : Paulo Vargas</a>
+          <a class="nav-link active" aria-current="page" routerLink="/my-profile">Usuario: {{ userDisplayName }}</a>
         </li>
       </ul>
+
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,7 +62,7 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuários
+            Usuarios
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/usuarios/novo">Adicionar</a></li>
@@ -62,26 +71,26 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Relatórios
+            Relatorios
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/relatorios/animais">Total de Animais</a></li>
+            <li><a class="dropdown-item" routerLink="/relatorios">Central de Relatorios</a></li>
+            <li><a class="dropdown-item" routerLink="/relatorios">Total de Animais</a></li>
+            <li><a class="dropdown-item" routerLink="/relatorios">Total de Eventos</a></li>
+            <li><a class="dropdown-item" routerLink="/relatorios">Total de Propriedades</a></li>
+            <li><a class="dropdown-item" routerLink="/relatorios">Total de Rebanhos</a></li>
           </ul>
         </li>
-       <!--  <li>
-          <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Brinco" aria-label="Brinco" />
-        <button class="btn btn-outline-success">Buscar</button>
-      </form>
-        </li> -->
       </ul>
+
       <ul class="navbar-nav me-5 mb-lg-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-user"></i></a>
+            <i class="fa fa-user"></i>
+          </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" routerLink="/my-profile">Meu Perfil</a></li>
-            <li><a class="dropdown-item" routerLink="/login">Sair</a></li>
+            <li><button type="button" class="dropdown-item" (click)="logout()">Sair</button></li>
           </ul>
         </li>
       </ul>
