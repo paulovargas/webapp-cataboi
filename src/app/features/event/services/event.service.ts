@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Event } from '../models/event.model';
+import { Page } from '../../../core/models/page.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  private events: Event[] = [
-    { id: 1, name: 'Vacinação', date: new Date(), description: 'Vacinação contra febre aftosa' },
-    { id: 2, name: 'Pesagem', date: new Date(), description: 'Pesagem de todos os animais' }
-  ];
+  private readonly apiUrl = `${environment.apiUrl}/eventos`;
 
-  getEvents(): Observable<Event[]> {
-    return of(this.events);
+  constructor(private readonly http: HttpClient) {}
+
+  getEvents(page = 0, size = 10): Observable<Page<Event>> {
+    return this.http.get<Page<Event>>(`${this.apiUrl}?page=${page}&size=${size}`);
+  }
+
+  create(event: Event): Observable<Event> {
+    return this.http.post<Event>(this.apiUrl, event);
+  }
+
+  update(event: Event): Observable<Event> {
+    return this.http.put<Event>(`${this.apiUrl}/${event.idevenR}`, event);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

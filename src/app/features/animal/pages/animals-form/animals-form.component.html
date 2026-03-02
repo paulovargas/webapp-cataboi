@@ -1,94 +1,108 @@
-<div class="container mt-4">
-  <h3>{{ isEditMode ? 'Editar Animal' : 'Novo Animal' }}</h3>
+<div class="crud-form-shell">
+  <h3 class="crud-form-title">{{ isEditMode ? 'Editar Animal' : 'Novo Animal' }}</h3>
 
   <form [formGroup]="animalForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="numeroBrincos">Número do Brinco</label>
-      <input
-        type="text"
-        id="numeroBrincos"
-        class="form-control"
-        formControlName="numeroBrincos"
-      />
+    <div class="crud-form-grid">
+      <div class="crud-form-group">
+        <label for="numeroBrincos">Numero do Brinco</label>
+        <input
+          type="text"
+          id="numeroBrincos"
+          class="form-control"
+          formControlName="numeroBrincos"
+          [class.is-invalid]="numeroBrincos?.invalid && numeroBrincos?.touched"
+        />
+        <div *ngIf="numeroBrincos?.invalid && numeroBrincos?.touched" class="invalid-feedback">
+          <div *ngIf="numeroBrincos?.errors?.['required']">Numero do brinco e obrigatorio.</div>
+        </div>
+      </div>
+
+      <div class="crud-form-group">
+        <label for="raca">Raca</label>
+        <input
+          type="text"
+          id="raca"
+          class="form-control"
+          formControlName="raca"
+          [class.is-invalid]="raca?.invalid && raca?.touched"
+        />
+        <div *ngIf="raca?.invalid && raca?.touched" class="invalid-feedback">
+          <div *ngIf="raca?.errors?.['required']">Raca e obrigatoria.</div>
+        </div>
+      </div>
+
+      <div class="crud-form-group">
+        <label for="sexo">Sexo</label>
+        <select id="sexo" class="form-control" formControlName="sexo">
+          <option value="Macho">Macho</option>
+          <option value="Femea">Femea</option>
+        </select>
+      </div>
+
+      <div class="crud-form-group">
+        <label for="dataNascimento">Data de Nascimento</label>
+        <input type="date" id="dataNascimento" class="form-control" formControlName="dataNascimento" />
+      </div>
+
+      <div class="crud-form-group">
+        <label for="peso">Peso (kg)</label>
+        <input type="number" id="peso" class="form-control" formControlName="peso" />
+      </div>
+
+      <div class="crud-form-group">
+        <label for="rebanho">Rebanho</label>
+        <select id="rebanho" class="form-control" formControlName="rebanho" [compareWith]="compareById">
+          <option [ngValue]="null">Selecione</option>
+          <option *ngFor="let herd of herds" [ngValue]="herd">
+            {{ herd.nomeRebanho }}
+          </option>
+        </select>
+      </div>
+
+      <div class="crud-form-group">
+        <label for="propriedade">Propriedade</label>
+        <select id="propriedade" class="form-control" formControlName="propriedade" [compareWith]="compareById">
+          <option [ngValue]="null">Selecione</option>
+          <option *ngFor="let property of properties" [ngValue]="property">
+            {{ property.nomePropriedade }}
+          </option>
+        </select>
+      </div>
+
+      <div class="crud-form-group">
+        <label for="especie">Especie</label>
+        <input type="text" id="especie" class="form-control" formControlName="especie" />
+      </div>
+
+      <div class="crud-form-group">
+        <label for="status">Status</label>
+        <input type="text" id="status" class="form-control" formControlName="status" />
+      </div>
+
+      <div class="crud-form-group">
+        <label for="pelagem">Pelagem</label>
+        <input type="text" id="pelagem" class="form-control" formControlName="pelagem" />
+      </div>
+
+      <div class="crud-form-group">
+        <label for="prenhez">Prenhe?</label>
+        <select id="prenhez" class="form-control" formControlName="prenhez">
+          <option value="Sim">Sim</option>
+          <option value="Nao">Nao</option>
+        </select>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="raca">Raça</label>
-      <input type="text" id="raca" class="form-control" formControlName="raca" />
-    </div>
-
-    <div class="form-group">
-      <label for="sexo">Sexo</label>
-      <select id="sexo" class="form-control" formControlName="sexo">
-        <option value="Macho">Macho</option>
-        <option value="Fêmea">Fêmea</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="dataNascimento">Data de Nascimento</label>
-      <input
-        type="date"
-        id="dataNascimento"
-        class="form-control"
-        formControlName="dataNascimento"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="peso">Peso (kg)</label>
-      <input
-        type="number"
-        id="peso"
-        class="form-control"
-        formControlName="peso"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="rebanho">Rebanho</label>
-      <input type="text" id="rebanho" class="form-control" formControlName="rebanho">
-    </div>
-
-    <div class="form-group">
-      <label for="propriedade">Propriedade</label>
-      <input type="text" id="propriedade" class="form-control" formControlName="propriedade">
-    </div>
-
-    <div class="form-group">
-      <label for="especie">Espécie</label>
-      <input type="text" id="especie" class="form-control" formControlName="especie">
-    </div>
-
-    <div class="form-group">
-      <label for="status">Status</label>
-      <input type="text" id="status" class="form-control" formControlName="status">
-    </div>
-
-    <div class="form-group">
-      <label for="pelagem">Pelagem</label>
-      <input type="text" id="pelagem" class="form-control" formControlName="pelagem">
-    </div>
-
-    <div class="form-group">
-      <label for="prenhez">Prenhe?</label>
-      <select id="prenhez" class="form-control" formControlName="prenhez">
-        <option value="Sim">Sim</option>
-        <option value="Nao">Não</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="descricao">Descrição</label>
+    <div class="crud-form-group mt-2">
+      <label for="descricao">Descricao</label>
       <textarea id="descricao" class="form-control" formControlName="descricao"></textarea>
     </div>
 
-    <button
-      type="submit"
-      class="btn btn-primary mt-3"
-      [disabled]="animalForm.invalid"
-    >
-      {{ isEditMode ? 'Atualizar' : 'Salvar' }}
-    </button>
+    <div class="crud-form-actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancelar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="animalForm.invalid">
+        {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+      </button>
+    </div>
   </form>
 </div>

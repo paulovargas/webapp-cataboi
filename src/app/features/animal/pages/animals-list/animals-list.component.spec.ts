@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AnimalsListComponent } from './animals-list.component';
@@ -8,7 +9,7 @@ describe('AnimalsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AnimalsListComponent]
+      imports: [AnimalsListComponent, HttpClientTestingModule]
     })
     .compileComponents();
 

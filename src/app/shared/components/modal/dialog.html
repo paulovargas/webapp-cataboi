@@ -1,11 +1,11 @@
-<div class="modal-dialog align-items-center" [ngStyle]="{ 'min-width': modalStyle ? modalStyle : '170vh'}">
-  <div class="modal-content">
-    <div class="titulo mx-2 my-2">
-      <h5>{{ data?.title ? data?.title : titulo }}</h5>
-      <!-- <button mat-button (click)="close()">Fechar</button> -->
+<div class="crud-modal-dialog" [ngClass]="sizeClass">
+  <div class="crud-modal-content">
+    <div class="crud-modal-header">
+      <h5 class="crud-modal-title">{{ data.title ? data.title : titulo }}</h5>
+      <button type="button" class="crud-modal-close" (click)="close()">x</button>
     </div>
-    <div class="modal-body">
-      @if (data?.component) {
+    <div class="crud-modal-body">
+      @if (data.component) {
         <ng-container #dynamicContainer></ng-container>
       } @else {
         <div>

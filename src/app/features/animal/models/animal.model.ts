@@ -13,7 +13,7 @@ export interface Animal {
   pelagem: string;
   sexo: string;
   prenhez: string;
-  peso: 0;
+  peso: number;
   foto: null;
   descricao: string;
 }

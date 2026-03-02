@@ -1,6 +1,9 @@
 export interface Event {
-  id: number;
-  name: string;
-  date: Date;
-  description: string;
+  idevenR: number;
+  eventoGrupo?: number;
+  nome: string;
+  local?: string;
+  dataEvento: string;
+  descri?: string;
+  obser?: string;
 }

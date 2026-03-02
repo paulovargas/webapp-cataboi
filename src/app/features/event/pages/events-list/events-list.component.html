@@ -1,24 +1,68 @@
-<div class="container mt-4">
-  <h2>Lista de Eventos</h2>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Data</th>
-        <th>Descrição</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let event of events">
-        <td>{{ event.name }}</td>
-        <td>{{ event.date | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ event.description }}</td>
-      </tr>
-    </tbody>
-    <tfoot *ngIf="events.length === 0">
-      <tr>
-        <td colspan="3" class="text-center">Nenhum evento encontrado.</td>
-      </tr>
-    </tfoot>
-  </table>
+<div class="crud-page">
+  <div class="row crud-toolbar align-items-center">
+    <div class="col-md-6">
+      <h2 class="crud-title">Lista de Eventos</h2>
+    </div>
+    <div class="col-md-6 d-flex justify-content-md-end">
+      <button type="button" (click)="adicionarEvento()" class="crud-primary-btn">
+        Novo Evento
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Pesquisar eventos..." [formControl]="searchControl">
+      </div>
+    </div>
+  </div>
+
+  <div class="crud-table-wrap table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Data</th>
+          <th>Descricao</th>
+          <th>Acoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of filteredEvents">
+          <td>{{ event.nome }}</td>
+          <td>{{ event.dataEvento | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ event.descri }}</td>
+          <td class="crud-actions">
+            <button type="button" (click)="editarEvento(event)" class="crud-action-btn" title="Editar">
+              Editar
+            </button>
+            <button type="button" (click)="deleteEvent(event.idevenR)" class="crud-action-btn delete" title="Excluir">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="filteredEvents.length === 0">
+        <tr>
+          <td colspan="4" class="text-center">Nenhum evento encontrado.</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center" *ngIf="totalPages > 0">
+    <button class="btn btn-outline-secondary" type="button" (click)="previousPage()" [disabled]="page === 0 || loading">
+      Anterior
+    </button>
+    <span>Pagina {{ page + 1 }} de {{ totalPages }}</span>
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="nextPage()"
+      [disabled]="page + 1 >= totalPages || loading"
+    >
+      Proxima
+    </button>
+  </div>
 </div>

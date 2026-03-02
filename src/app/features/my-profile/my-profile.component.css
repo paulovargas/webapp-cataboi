@@ -1,0 +1,35 @@
+.profile-card {
+  width: min(720px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-card .alert {
+  margin-bottom: 0;
+}
+
+.cliente-card {
+  border: 1px solid #d7e5d2;
+  border-radius: 10px;
+  background: linear-gradient(170deg, #ffffff 0%, #f7fbf5 100%);
+  padding: 12px;
+}
+
+.cliente-title {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: #1f2d1f;
+}
+
+.cliente-value {
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 0.86rem;
+  border: 1px solid #c8ddc3;
+  border-radius: 8px;
+  background: #fdfefd;
+  color: #2d3a2d;
+  display: flex;
+  align-items: center;
+}

@@ -1,21 +1,54 @@
-.modal-dialog {
-  width: 100%; /* Largura máxima do modal */
+.crud-modal-dialog {
+  width: min(92vw, 920px);
+  margin: 0 auto;
 }
 
-.modal-content {
-  max-height: 85vh; /* Altura máxima do modal (60% da viewport) */
-  align-content: center;
+.crud-modal-dialog.size-sm {
+  width: min(92vw, 520px);
 }
 
-.modal-body {
-  overflow-x: hidden;
+.crud-modal-dialog.size-md {
+  width: min(92vw, 720px);
 }
 
-.titulo {
+.crud-modal-dialog.size-lg {
+  width: min(96vw, 1040px);
+}
+
+.crud-modal-content {
+  max-height: 88vh;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 
-.overflow-y-form {
-  max-height: 30vh;
+.crud-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8fafc;
+}
+
+.crud-modal-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.crud-modal-close {
+  border: 0;
+  background: transparent;
+  font-size: 1rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.crud-modal-body {
+  padding: 10px 14px 12px;
+  overflow: auto;
 }

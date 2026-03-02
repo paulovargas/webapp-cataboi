@@ -9,6 +9,10 @@ import {
 import { Animal } from '../../models/animal.model';
 import { AnimalService } from '../../services/animal.service';
 import { ModalService } from '../../../../shared/services/modal.service';
+import { Herd } from '../../../herd/models/herd.model';
+import { Property } from '../../../property/models/property.model';
+import { HerdService } from '../../../herd/services/herd.service';
+import { PropertyService } from '../../../property/services/property.service';
 
 @Component({
   selector: 'app-animals-form',
@@ -19,37 +23,43 @@ import { ModalService } from '../../../../shared/services/modal.service';
 })
 export class AnimalsFormComponent implements OnInit {
   private _dados?: Animal;
-
-  public set dados(value: Animal | undefined) {
-    if (value) {
-      this._dados = value;
-      this.isEditMode = true;
-      this.animalForm.patchValue({
-        idanimal: value.idanimal,
-        rebanho: value.rebanho,
-        propriedade: value.propriedade,
-        especie: value.especie,
-        numeroBrincos: value.numeroBrincos,
-        dataNascimento: value.dataNascimento.split('T')[0],
-        status: value.status,
-        raca: value.raca,
-        pelagem: value.pelagem,
-        sexo: value.sexo,
-        prenhez: value.prenhez,
-        peso: value.peso,
-        descricao: value.descricao,
-      });
-      console.log('Dados do animal:', value);
-    }
-  }
-
   animalForm: FormGroup;
   isEditMode = false;
+  herds: Herd[] = [];
+  properties: Property[] = [];
+
+  public set dados(value: Animal | undefined) {
+    if (!value) {
+      return;
+    }
+
+    this._dados = value;
+    this.isEditMode = true;
+    const dataNascimento = value.dataNascimento ? String(value.dataNascimento).split('T')[0] : '';
+
+    this.animalForm.patchValue({
+      idanimal: value.idanimal,
+      rebanho: value.rebanho,
+      propriedade: value.propriedade,
+      especie: value.especie,
+      numeroBrincos: value.numeroBrincos,
+      dataNascimento,
+      status: value.status,
+      raca: value.raca,
+      pelagem: value.pelagem,
+      sexo: value.sexo,
+      prenhez: value.prenhez,
+      peso: value.peso,
+      descricao: value.descricao,
+    });
+  }
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly animalService: AnimalService,
     private readonly modalService: ModalService,
+    private readonly herdService: HerdService,
+    private readonly propertyService: PropertyService,
   ) {
     this.animalForm = this.fb.group({
       idanimal: [null],
@@ -69,27 +79,65 @@ export class AnimalsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // A lógica foi movida para o setter, então o ngOnInit fica limpo.
+    this.loadRelationships();
+  }
+
+  loadRelationships(): void {
+    this.herdService.getHerds(0, 200).subscribe({
+      next: (page) => {
+        this.herds = page.content;
+      },
+      error: (err) => console.error('Erro ao carregar rebanhos:', err),
+    });
+
+    this.propertyService.getProperties(0, 200).subscribe({
+      next: (page) => {
+        this.properties = page.content;
+      },
+      error: (err) => console.error('Erro ao carregar propriedades:', err),
+    });
   }
 
   onSubmit(): void {
-    if (this.animalForm.valid) {
-      const formData = this.animalForm.value;
-
-      // 3. Usa a propriedade privada '_dados' para a verificação de atualização
-      /* if (this._dados) {
-        this.animalService.update({ ...this._dados, ...formData }).subscribe(() => {
-          this.modalService.close();
-        });
-      } else {
-        this.animalService.create(formData).subscribe(() => {
-          this.modalService.close();
-        });
-      } */
+    if (!this.animalForm.valid) {
+      return;
     }
+
+    const formData = this.animalForm.value;
+
+    if (this._dados) {
+      this.animalService.updateAnimal({ ...this._dados, ...formData }).subscribe(() => {
+        this.modalService.close(true);
+      });
+      return;
+    }
+
+    this.animalService.createAnimal(formData).subscribe(() => {
+      this.modalService.close(true);
+    });
   }
 
   cancel(): void {
     this.modalService.close();
+  }
+
+  get numeroBrincos() {
+    return this.animalForm.get('numeroBrincos');
+  }
+
+  get raca() {
+    return this.animalForm.get('raca');
+  }
+
+  get dataNascimento() {
+    return this.animalForm.get('dataNascimento');
+  }
+
+  get peso() {
+    return this.animalForm.get('peso');
+  }
+
+  compareById(option: { id?: number }, value: { id?: number }): boolean {
+    return !!option && !!value && option.id === value.id;
   }
 }

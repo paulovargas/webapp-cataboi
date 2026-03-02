@@ -3,13 +3,14 @@ import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
 import { Page } from '../../../core/models/page.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
 
-  private readonly apiUrl = 'http://localhost:8080/propriedades';
+  private readonly apiUrl = `${environment.apiUrl}/propriedades`;
 
   private readonly property: Property[] = [];
 
@@ -19,5 +20,17 @@ export class PropertyService {
     return this.http.get<Page<Property>>(
         `${this.apiUrl}?page=${page}&size=${size}`
       );
+  }
+
+  create(property: Property): Observable<Property> {
+    return this.http.post<Property>(this.apiUrl, property);
+  }
+
+  update(property: Property): Observable<Property> {
+    return this.http.put<Property>(`${this.apiUrl}/${property.id}`, property);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

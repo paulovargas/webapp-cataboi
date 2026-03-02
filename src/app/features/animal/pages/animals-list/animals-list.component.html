@@ -1,36 +1,74 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Lista de Animais</h2>
-    <a (click)="adicionarAnimal()" class="btn btn-primary">Novo Animal</a>
+<div class="crud-page">
+  <div class="row crud-toolbar align-items-center">
+    <div class="col-md-6">
+      <h2 class="crud-title">Lista de Animais</h2>
+    </div>
+    <div class="col-md-6 d-flex justify-content-md-end">
+      <button type="button" (click)="adicionarAnimal()" class="crud-primary-btn">
+        Novo Animal
+      </button>
+    </div>
   </div>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Brinco</th>
-        <th>Raça</th>
-        <th>Sexo</th>
-        <th>Data de Nascimento</th>
-        <th>Peso (kg)</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let animal of animals">
-        <td>{{ animal.numeroBrincos }}</td>
-        <td>{{ animal.raca }}</td>
-        <td>{{ animal.sexo }}</td>
-        <td>{{ animal.dataNascimento| date: 'dd/MM/yyyy' }}</td>
-        <td>{{ animal.peso }}</td>
-        <td>
-          <button (click)="editarAnimal(animal)" class="btn btn-sm btn-outline-primary me-2">Editar</button>
-          <button (click)="deleteAnimal(animal.idanimal)" class="btn btn-sm btn-outline-danger">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot *ngIf="animals.length === 0">
-      <tr>
-        <td colspan="6" class="text-center">Nenhum animal encontrado.</td>
-      </tr>
-    </tfoot>
-  </table>
+
+  <div class="row">
+    <div class="col">
+      <form>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Pesquisar animais..." [formControl]="searchControl">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="crud-table-wrap table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="thead-dark">
+        <tr>
+          <th>Brinco</th>
+          <th>Raça</th>
+          <th>Sexo</th>
+          <th>Data de Nascimento</th>
+          <th>Peso (kg)</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let animal of filteredAnimals">
+          <td>{{ animal.numeroBrincos }}</td>
+          <td>{{ animal.raca }}</td>
+          <td>{{ animal.sexo }}</td>
+          <td>{{ animal.dataNascimento| date: 'dd/MM/yyyy' }}</td>
+          <td>{{ animal.peso }}</td>
+          <td class="crud-actions">
+            <button type="button" (click)="editarAnimal(animal)" class="crud-action-btn" title="Editar">
+              Editar
+            </button>
+            <button type="button" (click)="deleteAnimal(animal.idanimal)" class="crud-action-btn delete" title="Excluir">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="filteredAnimals.length === 0">
+        <tr>
+          <td colspan="6" class="text-center">Nenhum animal encontrado.</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center" *ngIf="totalPages > 0">
+    <button class="btn btn-outline-secondary" type="button" (click)="previousPage()" [disabled]="page === 0 || loading">
+      Anterior
+    </button>
+    <span>Pagina {{ page + 1 }} de {{ totalPages }}</span>
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="nextPage()"
+      [disabled]="page + 1 >= totalPages || loading"
+    >
+      Proxima
+    </button>
+  </div>
 </div>

@@ -22,7 +22,7 @@ export class ModalComponent {}
 })
 export class ModalContentDialog implements OnInit, AfterViewInit {
 
-  modalStyle: string = '160vh';
+  modalStyle: string = 'md';
   myString!: string;
   titulo?: string;
   urlBase: string = '';
@@ -34,7 +34,7 @@ export class ModalContentDialog implements OnInit, AfterViewInit {
   private componentRef!: ComponentRef<any>;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { component?: any, object?: any, modalStyle: string, title?: string, codUF: string, id: string},
+    @Inject(MAT_DIALOG_DATA) public data: { component?: any, object?: any, modalStyle?: string, title?: string, codUF?: string, id?: string},
     private readonly dialogRef: MatDialogRef<ModalContentDialog>,
     private readonly elRef: ElementRef,
     private readonly route: ActivatedRoute,
@@ -42,19 +42,18 @@ export class ModalContentDialog implements OnInit, AfterViewInit {
   ) {
 
     effect(() => {
-      this.modalStyle = this.data?.modalStyle ? data.modalStyle : '160vh';
-      this.titulo = data?.title ? data?.title : '';
+      this.modalStyle = this.data?.modalStyle ? this.data.modalStyle : 'md';
+      this.titulo = this.data?.title ? this.data?.title : '';
     })
   }
 
   ngOnInit(): void {
-    console.log("this.modalStyle : ", this.modalStyle)
+    // no-op
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.data?.component) {
-        console.log("Componente : ",this.data?.component);
         if (!this.titulo) {
           this.titulo = this.data.title;
         }
@@ -72,6 +71,20 @@ export class ModalContentDialog implements OnInit, AfterViewInit {
       }
 
     });
+  }
+
+  get sizeClass(): string {
+    if (this.modalStyle === 'lg') {
+      return 'size-lg';
+    }
+    if (this.modalStyle === 'sm') {
+      return 'size-sm';
+    }
+    return 'size-md';
+  }
+
+  close(): void {
+    this.dialogRef.close();
   }
 }
 

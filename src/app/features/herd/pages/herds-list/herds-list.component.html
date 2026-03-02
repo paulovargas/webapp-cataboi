@@ -1,24 +1,70 @@
-<div class="container mt-4">
-  <h2>Lista de Rebanhos</h2>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Descrição</th>
-        <th>Quantidade de Animais</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let herd of herds">
-        <td>{{ herd.nomeRebanho }}</td>
-        <td>{{ herd.descriRebanho }}</td>
-        <td>{{ herd.quantidadeAnimais }}</td>
-      </tr>
-    </tbody>
-    <tfoot *ngIf="herds.length === 0">
-      <tr>
-        <td colspan="2" class="text-center">Nenhum rebanho encontrado.</td>
-      </tr>
-    </tfoot>
-  </table>
+<div class="crud-page">
+  <div class="row crud-toolbar align-items-center">
+    <div class="col-md-6">
+      <h2 class="crud-title">Lista de Rebanhos</h2>
+    </div>
+    <div class="col-md-6 d-flex justify-content-md-end">
+      <button type="button" (click)="adicionarRebanho()" class="crud-primary-btn">
+        Novo Rebanho
+      </button>
+    </div>
+  </div>
+
+  <div class="crud-table-wrap table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Quantidade de Animais</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let herd of herds">
+          <td>{{ herd.nomeRebanho || '-' }}</td>
+          <td>{{ herd.descriRebanho || '-' }}</td>
+          <td>{{ herd.quantidadeAnimais }}</td>
+          <td class="crud-actions">
+            <button
+              type="button"
+              (click)="editarRebanho(herd)"
+              class="crud-action-btn"
+              title="Editar"
+            >
+              Editar
+            </button>
+            <button
+              type="button"
+              (click)="deleteHerd(herd.id)"
+              class="crud-action-btn delete"
+              title="Excluir"
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="herds.length === 0">
+        <tr>
+          <td colspan="4" class="text-center">Nenhum rebanho encontrado.</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center" *ngIf="totalPages > 0">
+    <button class="btn btn-outline-secondary" type="button" (click)="previousPage()" [disabled]="page === 0 || loading">
+      Anterior
+    </button>
+    <span>Pagina {{ page + 1 }} de {{ totalPages }}</span>
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="nextPage()"
+      [disabled]="page + 1 >= totalPages || loading"
+    >
+      Proxima
+    </button>
+  </div>
 </div>

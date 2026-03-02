@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, OnInit } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CardInformationComponent } from './components/cards/card-information/card-information.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
@@ -19,7 +19,7 @@ import { StorageService } from '../../core/services/storage.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent {
   public totalAnimais: number = 0;
   public totalRebanhos: number = 0;
   public totalPropriedades: number = 0;
@@ -31,16 +31,4 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.totalPropriedades = this.storage.getTotalPropriedades();
     });
   }
-  ngAfterViewInit(): void {
-    this.totalAnimais = this.storage.getTotalAnimais();
-    console.log('totalAnimais : ', this.totalAnimais);
-
-    this.totalRebanhos = this.storage.getTotalRebanhos();
-    console.log('totalRebanhos : ', this.totalRebanhos);
-
-    this.totalPropriedades = this.storage.getTotalPropriedades();
-    console.log('totalPropriedades : ', this.totalPropriedades);
-  }
-
-  ngOnInit(): void {}
 }

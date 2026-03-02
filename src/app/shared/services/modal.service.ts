@@ -14,24 +14,29 @@ export class ModalService {
     private readonly router: Router
   ) {}
 
-  open(options: ModalOptions): void {
+  open(options: ModalOptions): MatDialogRef<ModalContentDialog> | undefined {
 
     // 🔒 evita abrir outro modal se já existir
     if (this.dialogRef) {
-      return;
+      return this.dialogRef;
     }
 
     this.dialogRef = this.dialog.open(ModalContentDialog, {
       data: options,
-      disableClose: false
+      disableClose: false,
+      maxWidth: '98vw',
+      width: 'auto',
+      panelClass: 'crud-modal-panel'
     });
 
     this.dialogRef.afterClosed().subscribe(() => {
       this.dialogRef = undefined;
     });
+
+    return this.dialogRef;
   }
 
-  close(): void {
-    this.dialogRef?.close();
+  close(result?: unknown): void {
+    this.dialogRef?.close(result);
   }
 }

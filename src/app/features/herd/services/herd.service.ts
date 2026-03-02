@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Herd } from '../models/herd.model';
 import { Page } from '../../../core/models/page.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HerdService {
 
-  private readonly apiUrl = 'http://localhost:8080/rebanhos';
+  private readonly apiUrl = `${environment.apiUrl}/rebanhos`;
 
   constructor(private readonly http: HttpClient) {}
 

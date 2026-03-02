@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Animal } from '../models/animal.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AnimalService {
     { id: '4', name: 'Trovão', breed: 'Brahman', sex: 'Macho', birthDate: new Date('2022-08-05'), weight: 550 },
   ]; */
 
-  private readonly apiUrl = 'http://localhost:8080/animais';
+  private readonly apiUrl = `${environment.apiUrl}/animais`;
 
   private readonly mockAnimals: Animal[] = [];
 
@@ -28,33 +29,15 @@ export class AnimalService {
     );
   }
 
- /* getAnimalById(id: string): Observable<Animal | undefined> {
-    const animal = this.mockAnimals.find(a => a.id === id);
-    return of(animal);
+  createAnimal(animal: Animal): Observable<Animal> {
+    return this.http.post<Animal>(this.apiUrl, animal);
   }
 
-   create(animal: Omit<Animal, 'id'>): Observable<Animal> {
-    const newAnimal: Animal = {
-      id: uuidv4(),
-      ...animal
-    };
-    this.mockAnimals.push(newAnimal);
-    return of(newAnimal);
+  updateAnimal(animal: Animal): Observable<Animal> {
+    return this.http.put<Animal>(`${this.apiUrl}/${animal.idanimal}`, animal);
   }
 
-  update(animal: Animal): Observable<Animal> {
-    const index = this.mockAnimals.findIndex(a => a.id === animal.id);
-    if (index > -1) {
-      this.mockAnimals[index] = animal;
-    }
-    return of(animal);
+  deleteAnimal(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
-  delete(id: string): Observable<void> {
-    const index = this.mockAnimals.findIndex(a => a.id === id);
-    if (index > -1) {
-      this.mockAnimals.splice(index, 1);
-    }
-    return of(undefined);
-  } */
 }

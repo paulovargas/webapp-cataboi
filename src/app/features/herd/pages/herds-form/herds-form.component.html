@@ -2,14 +2,18 @@
   <h3>{{ isEditMode ? 'Editar Rebanho' : 'Novo Rebanho' }}</h3>
 
   <form [formGroup]="herdForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Nome</label>
-      <input type="text" id="name" class="form-control" formControlName="name">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nomeRebanho">Nome do Rebanho</label>
+          <input type="text" id="nomeRebanho" class="form-control" formControlName="nomeRebanho">
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="description">Descrição</label>
-      <textarea id="description" class="form-control" formControlName="description"></textarea>
+      <label for="descriRebanho">Descrição</label>
+      <textarea id="descriRebanho" class="form-control" formControlName="descriRebanho"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary mt-3" [disabled]="herdForm.invalid">

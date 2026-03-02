@@ -1,0 +1,57 @@
+<div class="crud-page">
+  <div class="row crud-toolbar align-items-center">
+    <div class="col-md-12">
+      <h2 class="crud-title">Meu Perfil</h2>
+    </div>
+  </div>
+
+  <div class="profile-card" *ngIf="!loading; else loadingTpl">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="crud-form-shell">
+      <div class="crud-form-grid">
+        <div class="crud-form-group">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" class="form-control" formControlName="nome" />
+        </div>
+
+        <div class="crud-form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" class="form-control" formControlName="email" />
+        </div>
+
+        <div class="crud-form-group">
+          <label for="senha">Nova Senha (opcional)</label>
+          <input id="senha" type="password" class="form-control" formControlName="senha" />
+        </div>
+      </div>
+
+      <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+
+      <div class="crud-form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid || saving">
+          {{ saving ? 'Salvando...' : 'Salvar Alteracoes' }}
+        </button>
+      </div>
+    </form>
+
+    <section class="cliente-card" *ngIf="cliente as c">
+      <h3 class="cliente-title">Cliente Vinculado</h3>
+      <div class="crud-form-grid">
+        <div class="crud-form-group"><label>Nome do Cliente</label><div class="cliente-value">{{ display(c.nomeCliente) }}</div></div>
+        <div class="crud-form-group"><label>CPF/CNPJ</label><div class="cliente-value">{{ display(c.cpfCnpj) }}</div></div>
+        <div class="crud-form-group"><label>Email</label><div class="cliente-value">{{ display(c.email) }}</div></div>
+        <div class="crud-form-group"><label>Telefone</label><div class="cliente-value">{{ display(c.telefone) }}</div></div>
+        <div class="crud-form-group"><label>Endereco</label><div class="cliente-value">{{ display(c.endereco) }}</div></div>
+        <div class="crud-form-group"><label>Cidade</label><div class="cliente-value">{{ display(c.cidade) }}</div></div>
+        <div class="crud-form-group"><label>Estado</label><div class="cliente-value">{{ display(c.estado) }}</div></div>
+        <div class="crud-form-group"><label>Inscricao Estadual</label><div class="cliente-value">{{ display(c.inscricaoEst) }}</div></div>
+        <div class="crud-form-group"><label>Numero de Usuarios</label><div class="cliente-value">{{ display(c.numUsuarios) }}</div></div>
+        <div class="crud-form-group"><label>Data de Cadastro</label><div class="cliente-value">{{ display(c.dtaInclu) }}</div></div>
+      </div>
+    </section>
+  </div>
+
+  <ng-template #loadingTpl>
+    <div class="alert alert-info py-2">Carregando perfil...</div>
+  </ng-template>
+</div>
