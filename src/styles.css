@@ -1,4 +1,246 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global layout */
+:root {
+  --cb-primary: #2f7d32;
+  --cb-primary-dark: #235f26;
+  --cb-primary-soft: #eaf4e8;
+  --cb-text: #1f2d1f;
+  --cb-muted: #5a6b5a;
+  --cb-border: #d7e5d2;
+  --cb-surface: #f4f8f2;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: var(--cb-text);
+  background: linear-gradient(180deg, #f9fcf8 0%, #f3f8f0 100%);
+}
+
+app-client-area,
+.client-area-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.client-area-content {
+  flex: 1;
+  overflow: auto;
+  padding: 12px 14px;
+}
+
+/* CRUD pages */
+.crud-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: visible;
+  background: radial-gradient(circle at top right, rgba(47, 125, 50, 0.08), transparent 40%), var(--cb-surface);
+  border: 1px solid var(--cb-border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.crud-toolbar {
+  margin: 0;
+}
+
+.crud-title {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: var(--cb-text);
+}
+
+.crud-table-wrap {
+  flex: 0 0 auto;
+  overflow: visible;
+  border: 1px solid var(--cb-border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(23, 55, 23, 0.06);
+}
+
+.crud-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: var(--cb-primary);
+  color: #fff;
+  border: 0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.86rem;
+}
+
+.crud-primary-btn:hover {
+  background: var(--cb-primary-dark);
+  color: #fff;
+}
+
+.crud-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.crud-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 5px;
+  border: 1px solid #9dc39c;
+  background: #fff;
+  color: #234025;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.crud-action-btn:hover {
+  background: var(--cb-primary-soft);
+  border-color: #7fab7e;
+}
+
+.crud-action-btn.delete {
+  border-color: #b84747;
+  color: #b84747;
+}
+
+.crud-action-btn.delete:hover {
+  background: #fff5f5;
+}
+
+.crud-table-wrap .table {
+  margin-bottom: 0;
+}
+
+.crud-table-wrap .table th,
+.crud-table-wrap .table td {
+  padding: 0.45rem 0.5rem;
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+
+.crud-table-wrap .table th {
+  background: #edf5ea;
+  color: #27482a;
+  border-bottom: 1px solid #cfe0c9;
+}
+
+.crud-table-wrap .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #fbfef9;
+}
+
+.crud-page .btn {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  font-size: 0.82rem;
+}
+
+.crud-page .btn-primary,
+.btn.btn-primary {
+  background-color: var(--cb-primary);
+  border-color: var(--cb-primary);
+}
+
+.crud-page .btn-primary:hover,
+.btn.btn-primary:hover {
+  background-color: var(--cb-primary-dark);
+  border-color: var(--cb-primary-dark);
+}
+
+.crud-page .btn-outline-secondary,
+.btn.btn-outline-secondary {
+  color: #2d5730;
+  border-color: #9dc39c;
+  background-color: #fff;
+}
+
+.crud-page .btn-outline-secondary:hover,
+.btn.btn-outline-secondary:hover {
+  color: #fff;
+  border-color: var(--cb-primary);
+  background-color: var(--cb-primary);
+}
+
+/* CRUD modal form standard */
+.crud-form-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.crud-form-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.crud-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.crud-form-group {
+  margin-bottom: 0;
+}
+
+.crud-form-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.84rem;
+  color: #335436;
+}
+
+.crud-form-group .form-control {
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 0.86rem;
+  border-color: #c8ddc3;
+  border-radius: 8px;
+}
+
+.crud-form-group textarea.form-control {
+  min-height: 84px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #7cab7d;
+  box-shadow: 0 0 0 0.2rem rgba(47, 125, 50, 0.16);
+}
+
+.crud-form-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .crud-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.crud-modal-panel .mat-mdc-dialog-surface,
+.crud-modal-panel .mat-dialog-container {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}

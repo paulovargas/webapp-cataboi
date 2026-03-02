@@ -1,0 +1,104 @@
+.reports-page {
+  --bg-soft: #f4f6ef;
+  --card-bg: #ffffff;
+  --text-main: #1f2d1f;
+  --text-muted: #516151;
+  --primary: #2f7d32;
+  --primary-dark: #235f26;
+  --border-soft: #dbe6d5;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top right, rgba(47, 125, 50, 0.12), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(141, 169, 96, 0.14), transparent 35%),
+    var(--bg-soft);
+  border-radius: 1rem;
+}
+
+.reports-header {
+  margin-bottom: 1.5rem;
+}
+
+.kicker {
+  margin: 0;
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+.reports-header h2 {
+  margin: 0.35rem 0;
+  color: var(--text-main);
+  font-size: clamp(1.4rem, 2vw, 2rem);
+}
+
+.reports-header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.2rem;
+}
+
+.report-card {
+  border: 1px solid var(--border-soft);
+  border-radius: 0.9rem;
+  background: linear-gradient(160deg, #ffffff 0%, #fbfdf9 100%);
+  padding: 1.1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 6px 16px rgba(17, 35, 20, 0.04);
+}
+
+.report-card:hover {
+  border-color: #bdd3b0;
+  box-shadow: 0 10px 22px rgba(27, 54, 30, 0.1);
+  transform: translateY(-2px);
+}
+
+.report-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.report-card p {
+  margin: 0.55rem 0 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  min-height: 2.2rem;
+}
+
+.download-button {
+  border: 0;
+  border-radius: 0.55rem;
+  background: var(--primary);
+  color: #fff;
+  padding: 0.55rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.download-button:hover:enabled {
+  background: var(--primary-dark);
+}
+
+.download-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .reports-page {
+    padding: 1.2rem;
+    border-radius: 0.7rem;
+  }
+
+  .report-card p {
+    min-height: unset;
+  }
+}

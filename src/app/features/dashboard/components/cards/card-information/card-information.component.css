@@ -3,28 +3,32 @@
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-color: #fff;
-  transition: transform 0.2s;
+  border: 1px solid #d7e5d2;
+  box-shadow: 0 8px 18px rgba(23, 55, 23, 0.08);
+  background: linear-gradient(170deg, #ffffff 0%, #f8fcf6 100%);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(23, 55, 23, 0.12);
 }
 
 .card-icon {
   font-size: 2rem;
   margin-right: 20px;
+  color: #2f7d32;
 }
 
 .card-title {
   margin: 0;
   font-size: 1rem;
-  color: #6c757d;
+  color: #5a6b5a;
 }
 
 .card-text {
   margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
+  color: #1f2d1f;
 }

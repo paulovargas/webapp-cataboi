@@ -1,0 +1,22 @@
+<section class="reports-page">
+  <header class="reports-header">
+    <p class="kicker">Central de Relatorios</p>
+    <h2>Relatorios Gerenciais</h2>
+    <p>Gere os PDFs consolidados por modulo com um clique.</p>
+  </header>
+
+  <div class="reports-grid">
+    <article class="report-card" *ngFor="let report of reportCards">
+      <h3>{{ report.title }}</h3>
+      <p>{{ report.subtitle }}</p>
+      <button
+        type="button"
+        class="download-button"
+        (click)="downloadReport(report.type)"
+        [disabled]="downloading !== null"
+      >
+        {{ isDownloading(report.type) ? 'Gerando arquivo...' : 'Baixar PDF' }}
+      </button>
+    </article>
+  </div>
+</section>
