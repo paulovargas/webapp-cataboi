@@ -39,7 +39,8 @@ export class LoginComponent {
     this.authService.login({ email: this.email, senha: this.senha }).subscribe({
       next: () => {
         this.enviando = false;
-        this.router.navigate(['/dashboard']);
+        const target = this.authService.isSystemAdmin() ? '/admin' : '/dashboard';
+        this.router.navigate([target]);
       },
       error: () => {
         this.enviando = false;

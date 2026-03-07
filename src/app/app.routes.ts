@@ -16,47 +16,40 @@ import { UsersFormComponent } from './features/user/pages/users-form/users-form.
 import { CustomersListComponent } from './features/customer/pages/customers-list/customers-list.component';
 import { TenantsListComponent } from './features/tenant/pages/tenants-list/tenants-list.component';
 import { AdminHomeComponent } from './features/admin/pages/admin-home/admin-home.component';
+import { AdminAreaComponent } from './features/admin/admin-area.component';
 import { ReportsAnimalsComponent } from './features/report/pages/reports-animals/reports-animals.component';
 import { authGuard } from './core/auth/auth.guard';
-import { masterGuard } from './core/auth/master.guard';
 import { adminGuard } from './core/auth/admin.guard';
+import { masterGuard } from './core/auth/master.guard';
+import { clientAreaGuard } from './core/auth/client-area.guard';
 
 export const routes: Routes = [
-  // Redireciona para dashboard ou home conforme a lógica de auth (simplificado aqui)
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   {
     path: '',
     component: ClientAreaComponent,
-    canActivate: [authGuard],
+    canActivate: [clientAreaGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
+
       { path: 'animais', component: AnimalsListComponent },
       { path: 'animais/novo', component: AnimalsFormComponent },
       { path: 'animais/editar/:id', component: AnimalsFormComponent },
 
-      // Eventos
       { path: 'eventos', component: EventsListComponent },
       { path: 'eventos/novo', component: EventsFormComponent },
 
-      // Propriedades
       { path: 'propriedades', component: PropertiesListComponent },
       { path: 'propriedades/novo', component: PropertiesFormComponent },
 
-      // Rebanhos
       { path: 'rebanhos', component: HerdsListComponent },
       { path: 'rebanhos/novo', component: HerdsFormComponent },
       { path: 'rebanhos/editar/:id', component: HerdsFormComponent },
 
-      // Usuários
       { path: 'usuarios', component: UsersListComponent, canActivate: [adminGuard] },
       { path: 'usuarios/novo', component: UsersFormComponent, canActivate: [adminGuard] },
-      { path: 'admin', component: AdminHomeComponent, canActivate: [masterGuard] },
-      { path: 'admin/usuarios', component: UsersListComponent, canActivate: [adminGuard] },
-      { path: 'admin/clientes', component: CustomersListComponent, canActivate: [masterGuard] },
-      { path: 'admin/tenants', component: TenantsListComponent, canActivate: [masterGuard] },
 
-      // Relatórios
       { path: 'relatorios', component: ReportsAnimalsComponent },
       { path: 'relatorios/animais', redirectTo: 'relatorios', pathMatch: 'full' },
 
@@ -67,5 +60,15 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'admin',
+    component: AdminAreaComponent,
+    canActivate: [authGuard, masterGuard],
+    children: [
+      { path: '', component: AdminHomeComponent },
+      { path: 'usuarios', component: UsersListComponent },
+      { path: 'clientes', component: CustomersListComponent },
+      { path: 'tenants', component: TenantsListComponent },
+    ],
+  },
 ];
-

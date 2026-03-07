@@ -1,0 +1,8 @@
+.admin-shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f4f7f1 0%, #e6efe2 100%);
+}
+
+.admin-content {
+  padding: 1.25rem;
+}

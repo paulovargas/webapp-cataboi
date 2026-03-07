@@ -1,0 +1,18 @@
+<nav class="admin-navbar">
+  <div class="admin-brand">
+    <a routerLink="/admin" class="brand-link">Cataboi Sistema</a>
+    <span class="admin-pill">SYSTEM_ADMIN</span>
+  </div>
+
+  <ul class="admin-nav-links">
+    <li><a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Painel</a></li>
+    <li><a routerLink="/admin/clientes" routerLinkActive="active">Clientes</a></li>
+    <li><a routerLink="/admin/usuarios" routerLinkActive="active">Usuarios</a></li>
+    <li><a routerLink="/admin/tenants" routerLinkActive="active">Tenants</a></li>
+  </ul>
+
+  <div class="admin-account">
+    <span>{{ userDisplayName }}</span>
+    <button type="button" (click)="logout()">Sair</button>
+  </div>
+</nav>
