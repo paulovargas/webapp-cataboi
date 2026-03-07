@@ -13,8 +13,9 @@ export class UserService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getUsers(page = 0, size = 10): Observable<Page<User>> {
-    return this.http.get<Page<User>>(`${this.apiUrl}?page=${page}&size=${size}`);
+  getUsers(page = 0, size = 10, clienteId?: number): Observable<Page<User>> {
+    const clienteParam = clienteId ? `&clienteId=${clienteId}` : '';
+    return this.http.get<Page<User>>(`${this.apiUrl}/admin/usuarios?page=${page}&size=${size}${clienteParam}`);
   }
 
   getMe(): Observable<User> {
@@ -26,14 +27,14 @@ export class UserService {
   }
 
   create(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
+    return this.http.post<User>(`${this.apiUrl}/admin/usuarios`, user);
   }
 
   update(user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${user.idusu}`, user);
+    return this.http.put<User>(`${this.apiUrl}/admin/usuarios/${user.idusu}`, user);
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/admin/usuarios/${id}`);
   }
 }

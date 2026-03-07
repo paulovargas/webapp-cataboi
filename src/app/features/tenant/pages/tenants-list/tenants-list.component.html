@@ -1,0 +1,55 @@
+<div class="crud-page">
+  <div class="row crud-toolbar align-items-center">
+    <div class="col-md-4">
+      <h2 class="crud-title">Tenants e Bancos</h2>
+    </div>
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pesquisar por tenant ou URL..."
+        [formControl]="searchControl"
+      />
+    </div>
+    <div class="col-md-4 d-flex justify-content-md-end mt-2 mt-md-0">
+      <button type="button" (click)="novoTenant()" class="crud-primary-btn">
+        Novo Tenant
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+  <div *ngIf="loading" class="alert alert-info py-2">Carregando tenants...</div>
+
+  <div class="crud-table-wrap table-responsive" *ngIf="!loading">
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+      <tr>
+        <th>Tenant Key</th>
+        <th>JDBC URL</th>
+        <th>Usuario</th>
+        <th>Password</th>
+        <th>Acoes</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let tenant of filteredTenants">
+        <td>{{ tenant.tenantKey }}</td>
+        <td>{{ tenant.url }}</td>
+        <td>{{ tenant.username }}</td>
+        <td>{{ tenant.password || '********' }}</td>
+        <td class="crud-actions">
+          <button type="button" class="crud-action-btn" (click)="editarTenant(tenant)">Editar</button>
+          <button type="button" class="crud-action-btn delete" (click)="excluirTenant(tenant)">Excluir</button>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot *ngIf="filteredTenants.length === 0">
+      <tr>
+        <td colspan="5" class="text-center">Nenhum tenant encontrado.</td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

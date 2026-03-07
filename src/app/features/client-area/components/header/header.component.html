@@ -21,6 +21,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="/my-profile">Usuario: {{ userDisplayName }}</a>
         </li>
+        <li class="nav-item d-flex align-items-center ms-2">
+          <span class="role-badge" [class.system]="isSystemAdmin">{{ roleLabel }}</span>
+        </li>
       </ul>
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -60,13 +63,15 @@
             <li><a class="dropdown-item" routerLink="/rebanhos">Consultar</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="isAnyAdmin">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuarios
+            Administracao
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/usuarios/novo">Adicionar</a></li>
-            <li><a class="dropdown-item" routerLink="/usuarios">Consultar</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/usuarios">Gerenciar Usuarios</a></li>
+            <li *ngIf="isSystemAdmin"><a class="dropdown-item" routerLink="/admin">Painel Administrativo</a></li>
+            <li *ngIf="isSystemAdmin"><a class="dropdown-item" routerLink="/admin/clientes">Gerenciar Clientes</a></li>
+            <li *ngIf="isSystemAdmin"><a class="dropdown-item" routerLink="/admin/tenants">Gerenciar Tenants</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">

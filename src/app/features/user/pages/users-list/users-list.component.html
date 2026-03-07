@@ -18,6 +18,18 @@
     </div>
   </div>
 
+  <div class="row g-2 mt-1" *ngIf="isSystemAdmin">
+    <div class="col-md-4">
+      <select class="form-select" [formControl]="customerFilterControl">
+        <option [ngValue]="null">Todos os clientes</option>
+        <option *ngFor="let customer of customers" [ngValue]="customer.id">{{ customer.nomeCliente }}</option>
+      </select>
+    </div>
+    <div class="col-md-8 d-flex align-items-center">
+      <small class="text-muted">Filtro global de clientes disponivel apenas para SYSTEM_ADMIN.</small>
+    </div>
+  </div>
+
   <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
   <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
   <div *ngIf="loading" class="alert alert-info py-2">Carregando usuarios...</div>
@@ -28,6 +40,8 @@
         <tr>
           <th>Nome</th>
           <th>Email</th>
+          <th *ngIf="isSystemAdmin">Cliente</th>
+          <th>Perfil</th>
           <th>Acoes</th>
         </tr>
       </thead>
@@ -35,6 +49,8 @@
         <tr *ngFor="let user of filteredUsers">
           <td>{{ user.nome }}</td>
           <td>{{ user.email }}</td>
+          <td *ngIf="isSystemAdmin">{{ user.cliente?.nomeCliente || '-' }}</td>
+          <td>{{ getRoleLabel(user) }}</td>
           <td class="crud-actions">
             <button type="button" (click)="editarUsuario(user)" class="crud-action-btn" title="Editar">
               Editar
@@ -47,7 +63,7 @@
       </tbody>
       <tfoot *ngIf="filteredUsers.length === 0">
         <tr>
-          <td colspan="3" class="text-center">Nenhum usuario encontrado.</td>
+          <td [attr.colspan]="isSystemAdmin ? 5 : 4" class="text-center">Nenhum usuario encontrado.</td>
         </tr>
       </tfoot>
     </table>

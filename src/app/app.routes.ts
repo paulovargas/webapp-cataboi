@@ -13,8 +13,13 @@ import { HerdsListComponent } from './features/herd/pages/herds-list/herds-list.
 import { HerdsFormComponent } from './features/herd/pages/herds-form/herds-form.component';
 import { UsersListComponent } from './features/user/pages/users-list/users-list.component';
 import { UsersFormComponent } from './features/user/pages/users-form/users-form.component';
+import { CustomersListComponent } from './features/customer/pages/customers-list/customers-list.component';
+import { TenantsListComponent } from './features/tenant/pages/tenants-list/tenants-list.component';
+import { AdminHomeComponent } from './features/admin/pages/admin-home/admin-home.component';
 import { ReportsAnimalsComponent } from './features/report/pages/reports-animals/reports-animals.component';
 import { authGuard } from './core/auth/auth.guard';
+import { masterGuard } from './core/auth/master.guard';
+import { adminGuard } from './core/auth/admin.guard';
 
 export const routes: Routes = [
   // Redireciona para dashboard ou home conforme a lógica de auth (simplificado aqui)
@@ -44,8 +49,12 @@ export const routes: Routes = [
       { path: 'rebanhos/editar/:id', component: HerdsFormComponent },
 
       // Usuários
-      { path: 'usuarios', component: UsersListComponent },
-      { path: 'usuarios/novo', component: UsersFormComponent },
+      { path: 'usuarios', component: UsersListComponent, canActivate: [adminGuard] },
+      { path: 'usuarios/novo', component: UsersFormComponent, canActivate: [adminGuard] },
+      { path: 'admin', component: AdminHomeComponent, canActivate: [masterGuard] },
+      { path: 'admin/usuarios', component: UsersListComponent, canActivate: [adminGuard] },
+      { path: 'admin/clientes', component: CustomersListComponent, canActivate: [masterGuard] },
+      { path: 'admin/tenants', component: TenantsListComponent, canActivate: [masterGuard] },
 
       // Relatórios
       { path: 'relatorios', component: ReportsAnimalsComponent },
@@ -59,3 +68,4 @@ export const routes: Routes = [
     ],
   },
 ];
+

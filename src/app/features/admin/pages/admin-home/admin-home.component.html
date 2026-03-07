@@ -1,0 +1,81 @@
+<div class="admin-page">
+  <div class="admin-header">
+    <div>
+      <h2>Painel Administrativo</h2>
+      <p>Gerencie clientes, usuarios e configuracoes de tenants.</p>
+    </div>
+    <button type="button" class="crud-primary-btn" (click)="loadSummary()" [disabled]="loading">
+      {{ loading ? 'Atualizando...' : 'Atualizar dados' }}
+    </button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+
+  <section class="admin-kpis">
+    <article class="kpi-card">
+      <span class="kpi-label">Usuarios</span>
+      <strong class="kpi-value">{{ totalUsers }}</strong>
+      <a routerLink="/admin/usuarios" class="kpi-link">Gerenciar usuarios</a>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">Clientes</span>
+      <strong class="kpi-value">{{ totalCustomers }}</strong>
+      <a routerLink="/admin/clientes" class="kpi-link">Gerenciar clientes</a>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">Tenants</span>
+      <strong class="kpi-value">{{ totalTenants }}</strong>
+      <a routerLink="/admin/tenants" class="kpi-link">Gerenciar tenants</a>
+    </article>
+  </section>
+
+  <section class="admin-insights">
+    <article class="insight-card">
+      <h3>Distribuicao de Perfis</h3>
+      <div class="role-line">
+        <span>SYSTEM_ADMIN</span>
+        <strong>{{ totalSystemAdmins }}</strong>
+      </div>
+      <div class="role-line">
+        <span>CLIENT_ADMIN</span>
+        <strong>{{ totalClientAdmins }}</strong>
+      </div>
+      <div class="role-line">
+        <span>CLIENT_USER</span>
+        <strong>{{ totalClientUsers }}</strong>
+      </div>
+    </article>
+
+    <article class="insight-card">
+      <h3>Clientes em Destaque</h3>
+      <ul class="customers-list" *ngIf="customersSnapshot.length > 0; else semClientes">
+        <li *ngFor="let customer of customersSnapshot">
+          <span>{{ customer.nomeCliente }}</span>
+          <small>{{ customer.tenantKey || 'Sem tenant' }}</small>
+        </li>
+      </ul>
+      <ng-template #semClientes>
+        <p class="text-muted mb-0">Nenhum cliente disponivel para resumo.</p>
+      </ng-template>
+    </article>
+  </section>
+
+  <section class="admin-actions">
+    <a routerLink="/admin/clientes" class="action-card">
+      <h3>Cadastro de Clientes</h3>
+      <p>Defina dados comerciais e tenant associado para cada cliente.</p>
+    </a>
+
+    <a routerLink="/admin/usuarios" class="action-card">
+      <h3>Gestao de Usuarios</h3>
+      <p>Controle perfis SYSTEM_ADMIN, CLIENT_ADMIN e CLIENT_USER.</p>
+    </a>
+
+    <a routerLink="/admin/tenants" class="action-card">
+      <h3>Infra de Tenants</h3>
+      <p>Configure conexoes por cliente com banco e host dedicados.</p>
+    </a>
+  </section>
+</div>

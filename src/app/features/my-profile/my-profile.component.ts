@@ -73,7 +73,13 @@ export class MyProfileComponent implements OnInit {
 
     this.userService.updateMe(payload).subscribe({
       next: (updated) => {
-        this.authService.setCurrentUser({ nome: updated.nome, email: updated.email });
+        const current = this.authService.getCurrentUser();
+        this.authService.setCurrentUser({
+          nome: updated.nome,
+          email: updated.email,
+          master: current?.master,
+          role: current?.role,
+        });
         this.profileForm.patchValue({ senha: '' });
         this.saving = false;
         this.successMessage = 'Perfil atualizado com sucesso.';

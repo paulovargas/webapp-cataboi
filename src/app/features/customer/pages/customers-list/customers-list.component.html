@@ -1,0 +1,72 @@
+<div class="crud-page">
+  <div class="row crud-toolbar align-items-center">
+    <div class="col-md-4">
+      <h2 class="crud-title">Lista de Clientes</h2>
+    </div>
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pesquisar por nome, email ou cidade..."
+        [formControl]="searchControl"
+      />
+    </div>
+    <div class="col-md-4 d-flex justify-content-md-end mt-2 mt-md-0">
+      <button type="button" (click)="adicionarCliente()" class="crud-primary-btn">
+        Novo Cliente
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+  <div *ngIf="loading" class="alert alert-info py-2">Carregando clientes...</div>
+
+  <div class="crud-table-wrap table-responsive" *ngIf="!loading">
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Tenant</th>
+          <th>Cidade/Estado</th>
+          <th>Usuarios</th>
+          <th>Acoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of filteredCustomers">
+          <td>{{ customer.nomeCliente }}</td>
+          <td>{{ customer.email || '-' }}</td>
+          <td>{{ customer.tenantKey || '-' }}</td>
+          <td>{{ customer.cidade || '-' }}/{{ customer.estado || '-' }}</td>
+          <td>{{ customer.numUsuarios ?? '-' }}</td>
+          <td class="crud-actions">
+            <button type="button" (click)="editarCliente(customer)" class="crud-action-btn">Editar</button>
+            <button type="button" (click)="deleteCliente(customer)" class="crud-action-btn delete">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="filteredCustomers.length === 0">
+        <tr>
+          <td colspan="6" class="text-center">Nenhum cliente encontrado.</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="!loading && totalPages > 0">
+    <button class="btn btn-outline-secondary" type="button" (click)="previousPage()" [disabled]="page === 0">
+      Anterior
+    </button>
+    <span>Pagina {{ page + 1 }} de {{ totalPages }}</span>
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="nextPage()"
+      [disabled]="page + 1 >= totalPages"
+    >
+      Proxima
+    </button>
+  </div>
+</div>
