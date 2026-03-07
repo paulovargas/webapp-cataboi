@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerService } from '../../services/customer.service';
 import { ModalService } from '../../../../shared/services/modal.service';
@@ -126,14 +127,22 @@ export class CustomersFormComponent implements OnInit {
         this.saving = false;
         this.modalService.close(true);
       },
-      error: () => {
+      error: (error: HttpErrorResponse) => {
         this.saving = false;
-        this.errorMessage = 'Nao foi possivel salvar o cliente.';
+        this.errorMessage = this.resolveApiError(error);
       }
     });
   }
 
   cancel(): void {
     this.modalService.close();
+  }
+
+  private resolveApiError(error: HttpErrorResponse): string {
+    const apiMessage = error?.error?.message;
+    if (typeof apiMessage === 'string' && apiMessage.trim().length > 0) {
+      return apiMessage;
+    }
+    return 'Nao foi possivel salvar o cliente.';
   }
 }
