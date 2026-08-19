@@ -8,12 +8,17 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Animal } from '../../models/animal.model';
 import { Property } from '../../../property/models/property.model';
 import { Herd } from '../../../herd/models/herd.model';
+import { HerdService } from '../../../herd/services/herd.service';
+import { PropertyService } from '../../../property/services/property.service';
+import { Page } from '../../../../core/models/page.model';
 
 describe('AnimalsFormComponent', () => {
   let component: AnimalsFormComponent;
   let fixture: ComponentFixture<AnimalsFormComponent>;
-  let mockAnimalService: jasmine.SpyObj<AnimalService>;
-  let mockModalService: jasmine.SpyObj<ModalService>;
+  let mockAnimalService: jest.Mocked<Pick<AnimalService, 'createAnimal' | 'updateAnimal'>>;
+  let mockModalService: jest.Mocked<Pick<ModalService, 'close'>>;
+  let mockHerdService: jest.Mocked<Pick<HerdService, 'getHerds'>>;
+  let mockPropertyService: jest.Mocked<Pick<PropertyService, 'getProperties'>>;
 
   const mockProperty: Property = {
     id: 1,
@@ -35,7 +40,7 @@ describe('AnimalsFormComponent', () => {
     rebanho: mockHerd,
     propriedade: mockProperty,
     especie: 'Bovino',
-    numeroBrincos: '12345',
+    numeroBrincos: 12345,
     dataNascimento: '2023-01-15T00:00:00',
     status: 'Ativo',
     raca: 'Nelore',
@@ -48,8 +53,39 @@ describe('AnimalsFormComponent', () => {
   };
 
   beforeEach(async () => {
-    mockAnimalService = jasmine.createSpyObj('AnimalService', ['createAnimal', 'updateAnimal']);
-    mockModalService = jasmine.createSpyObj('ModalService', ['close']);
+    mockAnimalService = {
+      createAnimal: jest.fn(),
+      updateAnimal: jest.fn(),
+    };
+    mockModalService = {
+      close: jest.fn(),
+    };
+    mockHerdService = {
+      getHerds: jest.fn(),
+    };
+    mockPropertyService = {
+      getProperties: jest.fn(),
+    };
+    mockHerdService.getHerds.mockReturnValue(of({
+      content: [mockHerd],
+      totalElements: 1,
+      totalPages: 1,
+      number: 0,
+      size: 200,
+      first: true,
+      last: true,
+      empty: false,
+    } as Page<Herd>));
+    mockPropertyService.getProperties.mockReturnValue(of({
+      content: [mockProperty],
+      totalElements: 1,
+      totalPages: 1,
+      number: 0,
+      size: 200,
+      first: true,
+      last: true,
+      empty: false,
+    } as Page<Property>));
 
     await TestBed.configureTestingModule({
       imports: [
@@ -60,6 +96,8 @@ describe('AnimalsFormComponent', () => {
       providers: [
         { provide: AnimalService, useValue: mockAnimalService },
         { provide: ModalService, useValue: mockModalService },
+        { provide: HerdService, useValue: mockHerdService },
+        { provide: PropertyService, useValue: mockPropertyService },
       ],
     }).compileComponents();
 
@@ -73,7 +111,7 @@ describe('AnimalsFormComponent', () => {
   });
 
   it('should call animalService.createAnimal when form is valid and not in edit mode', () => {
-    mockAnimalService.createAnimal.and.returnValue(of({} as Animal));
+    mockAnimalService.createAnimal.mockReturnValue(of({} as Animal));
     component.animalForm.setValue({
       idanimal: null,
       rebanho: mockHerd,
@@ -97,7 +135,7 @@ describe('AnimalsFormComponent', () => {
   });
 
   it('should call animalService.updateAnimal when form is valid and in edit mode', () => {
-    mockAnimalService.updateAnimal.and.returnValue(of({} as Animal));
+    mockAnimalService.updateAnimal.mockReturnValue(of({} as Animal));
     component.dados = mockAnimal;
     fixture.detectChanges();
 
@@ -114,7 +152,7 @@ describe('AnimalsFormComponent', () => {
       propriedade: formValues.propriedade
     };
 
-    expect(mockAnimalService.updateAnimal).toHaveBeenCalledWith(jasmine.objectContaining({
+    expect(mockAnimalService.updateAnimal).toHaveBeenCalledWith(expect.objectContaining({
       idanimal: mockAnimal.idanimal,
       peso: 460
     }));
@@ -136,7 +174,7 @@ describe('AnimalsFormComponent', () => {
     component.dados = mockAnimal;
     fixture.detectChanges();
 
-    expect(component.isEditMode).toBeTrue();
+    expect(component.isEditMode).toBe(true);
     expect(component.animalForm.value.idanimal).toBe(mockAnimal.idanimal);
     expect(component.animalForm.value.numeroBrincos).toBe(mockAnimal.numeroBrincos);
   });
