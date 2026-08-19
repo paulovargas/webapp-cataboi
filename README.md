@@ -1,59 +1,76 @@
-# WebappCataboi
+# CataBoi WebApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+Aplicacao web do CataBoi para gerenciamento de rebanhos, animais, propriedades, eventos, usuarios e relatorios.
 
-## Development server
+# DEMO
 
-To start a local development server, run:
+https://paulovargas.github.io/webapp-cataboi/home
 
-```bash
-ng serve
-```
+O projeto foi criado com Angular CLI 19.2.15.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Requisitos
 
-## Code scaffolding
+- Node.js
+- npm
+- Angular CLI
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Instale as dependencias com:
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
+## Desenvolvimento local
 
-To build the project run:
+Para rodar a aplicacao localmente:
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Acesse:
 
-## Running unit tests
+```text
+http://localhost:4200/
+```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Por padrao, o ambiente local aponta para a API em:
+
+```text
+http://localhost:8080
+```
+
+## Login de demonstracao
+
+Quando a API nao responder, o sistema aceita automaticamente o login de demonstracao:
+
+```text
+Email: cataboi@cataboi.com.br
+Senha: cataboi
+```
+
+Esse login cria uma sessao local mockada e direciona para o dashboard. Algumas informacoes de rebanhos e propriedades tambem possuem fallback mockado para a demonstracao funcionar sem backend.
+
+## Build
+
+Para gerar a versao de demonstracao:
 
 ```bash
-ng test
+npm run build:pages
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Para gerar o build padrao do Angular:
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Observacao: o build padrao pode falhar caso o bundle ultrapasse o budget configurado em `angular.json`.
 
-## Additional Resources
+## Testes
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Para executar os testes unitarios:
+
+```bash
+npm test
+```
