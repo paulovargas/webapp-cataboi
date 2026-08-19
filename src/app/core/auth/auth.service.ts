@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, finalize, map, of, shareReplay, tap } from 'rxjs';
+import { Observable, catchError, finalize, map, of, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 interface LoginRequest {
@@ -26,22 +26,49 @@ export interface SessionUser {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly apiUrl = `${environment.apiUrl}/auth`;
+  private readonly mockEmail = 'cataboi@cataboi.com.br';
+  private readonly mockPassword = 'cataboi';
+  private readonly mockSessionKey = 'cataboi.mock.session';
   private accessToken: string | null = null;
   private currentUser: SessionUser | null = null;
   private refreshInFlight$?: Observable<boolean>;
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {
+    this.restoreMockSession();
+  }
 
   login(payload: LoginRequest): Observable<LoginResponse> {
+    if (environment.useMockAuth) {
+      if (this.isMockLogin(payload)) {
+        return of(this.startMockSession());
+      }
+
+      return throwError(() => new Error('Invalid mock credentials'));
+    }
+
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/login`, payload, {
         withCredentials: true,
         headers: this.buildTenantHeaders(),
       })
-      .pipe(tap((response) => this.setSession(response)));
+      .pipe(
+        tap((response) => this.setSession(response)),
+        catchError((error) => {
+          if (this.isMockLogin(payload)) {
+            return of(this.startMockSession());
+          }
+
+          return throwError(() => error);
+        })
+      );
   }
 
   logout(): void {
+    if (environment.useMockAuth) {
+      this.clearSession();
+      return;
+    }
+
     this.http
       .post(`${this.apiUrl}/logout`, {}, {
         withCredentials: true,
@@ -91,6 +118,11 @@ export class AuthService {
   }
 
   refreshSession(): Observable<boolean> {
+    this.restoreMockSession();
+    if (environment.useMockAuth || this.accessToken === this.buildMockLoginResponse().token) {
+      return of(!!this.accessToken);
+    }
+
     if (this.refreshInFlight$) {
       return this.refreshInFlight$;
     }
@@ -132,6 +164,7 @@ export class AuthService {
   private clearSession(): void {
     this.accessToken = null;
     this.currentUser = null;
+    localStorage.removeItem(this.mockSessionKey);
   }
 
   private buildTenantHeaders(): HttpHeaders | undefined {
@@ -139,5 +172,46 @@ export class AuthService {
       return undefined;
     }
     return new HttpHeaders({ 'X-Tenant-Key': environment.tenantKey });
+  }
+
+  private buildMockLoginResponse(): LoginResponse {
+    return {
+      token: 'mock-cataboi-demo-token',
+      nome: 'Usuario Demonstracao',
+      email: this.mockEmail,
+      role: 'CLIENT_ADMIN',
+    };
+  }
+
+  private isMockLogin(payload: LoginRequest): boolean {
+    return payload.email === this.mockEmail && payload.senha === this.mockPassword;
+  }
+
+  private startMockSession(): LoginResponse {
+    const response = this.buildMockLoginResponse();
+    this.setSession(response);
+    this.persistMockSession(response);
+    return response;
+  }
+
+  private persistMockSession(response: LoginResponse): void {
+    localStorage.setItem(this.mockSessionKey, JSON.stringify(response));
+  }
+
+  private restoreMockSession(): void {
+    if (this.accessToken) {
+      return;
+    }
+
+    const storedSession = localStorage.getItem(this.mockSessionKey);
+    if (!storedSession) {
+      return;
+    }
+
+    try {
+      this.setSession(JSON.parse(storedSession) as LoginResponse);
+    } catch {
+      localStorage.removeItem(this.mockSessionKey);
+    }
   }
 }
